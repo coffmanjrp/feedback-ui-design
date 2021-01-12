@@ -13,10 +13,19 @@ function removeActive() {
 }
 
 ratingsContainer.addEventListener('click', (e) => {
+  removeActive();
+
   if (e.target?.parentNode.classList.contains('rating')) {
-    removeActive();
     e.target.parentNode.classList.add('active');
-    selectedRating = e.target.nextElementSibling.innerHTML;
+    if (e.target.matches('small')) {
+      selectedRating = e.target.innerHTML;
+    } else {
+      selectedRating = e.target.nextElementSibling.innerHTML;
+    }
+  } else {
+    e.target?.classList.add('active');
+    selectedRating =
+      e.target.firstChild.nextElementSibling.nextElementSibling.innerHTML;
   }
 });
 
@@ -25,8 +34,6 @@ sendBtn.addEventListener('click', (e) => {
     panel.innerHTML = `
       <p>Please select one of the ratings.</p>
     `;
-
-    setTimeout(() => window.location.reload(), 1500);
   } else {
     panel.innerHTML = `
       <i class='fas fa-heart'></i>
